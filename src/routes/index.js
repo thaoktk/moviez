@@ -24,22 +24,22 @@ const routes = [
     layout: LoginLayout,
   },
   {
-    path: "/movie/:slug", // xong
+    path: "/movie/:id", // xong
     element: FilmDetail,
     layout: FilmLayout,
   },
   {
-    path: "/tv/:slug", //xong
+    path: "/tv/:id", //xong
     element: FilmDetail,
     layout: FilmLayout,
   },
   {
-    path: "/movie/:slug/watch", //xong
+    path: "/movie/:id/watch", //xong
     element: FilmWatch,
     layout: FilmLayout,
   },
   {
-    path: "/tv/:slug/watch", //xong
+    path: "/tv/:id/watch", //xong
     element: FilmWatch,
     layout: FilmLayout,
   },

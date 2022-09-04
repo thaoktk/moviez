@@ -6,4 +6,10 @@ const TRAILER_URL = "https://www.youtube.com/embed";
 const defaultAvatar =
   "https://tvline.com/wp-content/uploads/2016/08/stranger-things-eleven-haircut-video1.jpg?w=620";
 
-export { defaultAvatar, API_MOVIE, IMAGE_URL, FILM_URL, TRAILER_URL };
+export {
+  defaultAvatar,
+  API_MOVIE,
+  IMAGE_URL,
+  FILM_URL,
+  TRAILER_URL,
+};

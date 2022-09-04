@@ -1,6 +1,6 @@
 import React from "react";
 import { v4 } from "uuid";
-import FilmItem from "../FlimItem";
+import FilmItem from "../FilmItem";
 
 function ListFilm() {
   return (

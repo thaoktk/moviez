@@ -7,10 +7,12 @@ import { auth, db } from "./firebase/config";
 import DefaultLayout from "./layout/DefaultLayout";
 import routes from "./routes";
 import useAuth from "./store/auth";
+import useTypeSearch from "./store/type";
 
 function App() {
   const location = useLocation();
   const { setCurrentUser } = useAuth();
+  const { setTypeSearch } = useTypeSearch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,6 +33,14 @@ function App() {
 
     return () => unSubscribe();
   }, [setCurrentUser]);
+
+  useEffect(() => {
+    if (/[tv]/.test(location.pathname)) {
+      setTypeSearch("tv");
+    } else {
+      setTypeSearch("movie");
+    }
+  }, [location.pathname, setTypeSearch]);
 
   return (
     <div className="App">

@@ -1,12 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { Autoplay, FreeMode, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { v4 } from "uuid";
-import FilmItem from "../FlimItem";
-
-function SliderSection({ heading, type }) {
+import axiosClient from "../../shared/axiosClient";
+import FilmItem from "../FilmItem";
+// em dat vi tri file bị sai rôi hay sao y
+function SliderSection({ heading, type, paramSearch }) {
   const [swiper, setSwiper] = useState();
+  const [filmList, setFilmList] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      if (paramSearch === "trending") {
+        const res = await axiosClient.get(`/${paramSearch}/${type}/week`);
+        setFilmList(res.data.results);
+      } else {
+        const res = await axiosClient.get(`/${type}/${paramSearch}`);
+        setFilmList(res.data.results);
+      }
+    };
+
+    getData();
+  }, [type, paramSearch]);
+
   return (
     <div className="py-4 w-full">
       <div className="mb-5 flex items-center justify-between">
@@ -50,12 +66,12 @@ function SliderSection({ heading, type }) {
           onSwiper={(swiper) => setSwiper(swiper)}
           className="!absolute !top-0 !left-0 !w-full !h-full !rounded-lg"
         >
-          {new Array(8).fill(null).map(() => (
+          {filmList.map((film) => (
             <SwiperSlide
-              key={v4()}
-              className="relative film-section overflow-hidden"
+              key={film.id}
+              className="relative film-section rounded-lg overflow-hidden"
             >
-              <FilmItem />
+              <FilmItem type={type} film={film} />
             </SwiperSlide>
           ))}
         </Swiper>
