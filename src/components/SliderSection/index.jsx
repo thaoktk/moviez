@@ -4,7 +4,6 @@ import { Autoplay, FreeMode, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import axiosClient from "../../shared/axiosClient";
 import FilmItem from "../FilmItem";
-// em dat vi tri file bị sai rôi hay sao y
 function SliderSection({ heading, type, paramSearch }) {
   const [swiper, setSwiper] = useState();
   const [filmList, setFilmList] = useState([]);
@@ -66,7 +65,7 @@ function SliderSection({ heading, type, paramSearch }) {
           onSwiper={(swiper) => setSwiper(swiper)}
           className="!absolute !top-0 !left-0 !w-full !h-full !rounded-lg"
         >
-          {filmList.map((film) => (
+          {filmList?.map((film) => (
             <SwiperSlide
               key={film.id}
               className="relative film-section rounded-lg overflow-hidden"
