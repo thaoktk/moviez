@@ -40,7 +40,7 @@ function TvEpisode({ film }) {
                     alt={season.name}
                   />
                   <div className="">
-                    <p className="text-xl text-white font-normal">
+                    <p className="text-xl text-white text-start font-normal">
                       {season.name}
                     </p>
                     <p className="mt-3 text-xl text-white text-start font-normal">

@@ -39,7 +39,7 @@ function SliderTopHome({ type }) {
           onSwiper={(swiper) => setSwiper(swiper)}
           className="!absolute !top-0 !left-0 !w-full !h-full !rounded-lg"
         >
-          {filmList.map((film) => (
+          {filmList?.map((film) => (
             <SwiperSlide key={film.id} className="relative">
               <Image
                 className="w-full h-full"

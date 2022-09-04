@@ -5,7 +5,6 @@ import useTvVideo from "../../store/tvVideo";
 function Video({ type, film }) {
   const { tvVideo } = useTvVideo();
   
-  console.log("🚀 ~ file: index.jsx ~ line 8 ~ Video ~ tvVideo", tvVideo)
   return (
     <div className="w-full">
       <iframe
