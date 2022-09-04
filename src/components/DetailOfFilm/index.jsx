@@ -7,6 +7,7 @@ import { v4 } from "uuid";
 import { getImage } from "../../shared/utils";
 
 function DetailOfFilm({ type, film }) {
+  console.log("🚀 ~ file: index.jsx ~ line 10 ~ DetailOfFilm ~ type", type)
   return (
     <div className="lg:px-8 flex-[3_3_0%]">
       <div className="flex md:flex-row flex-col md:items-start items-center justify-start">

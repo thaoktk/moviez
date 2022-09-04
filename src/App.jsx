@@ -35,7 +35,7 @@ function App() {
   }, [setCurrentUser]);
 
   useEffect(() => {
-    if (/[tv]/.test(location.pathname)) {
+    if (/tv/.test(location.pathname)) {
       setTypeSearch("tv");
     } else {
       setTypeSearch("movie");
