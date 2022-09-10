@@ -24,7 +24,18 @@ code {
 
 .film-section:hover .image-film-section {
   filter: brightness(0.7);
-  transform: scaleX(1.1);
+  transform: scale(1.1);
+}
+
+.btn-like:hover .icon-like {
+  color: #ec2c4b;
+}
+.btn-like.active {
+  border-color: #ec2c4b;
+}
+
+.btn-like.active .icon-like {
+  color: #ec2c4b;
 }
 
 .text-shadow {

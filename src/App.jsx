@@ -6,17 +6,44 @@ import { v4 } from "uuid";
 import { auth, db } from "./firebase/config";
 import DefaultLayout from "./layout/DefaultLayout";
 import routes from "./routes";
-import useAuth from "./store/auth";
-import useTypeSearch from "./store/type";
+import useActiveGenresStore from "./store/activeGenres";
+import useAuthStore from "./store/auth";
+import useCommonStore from "./store/common";
+import useQuerySearchStore from "./store/querySearch";
+import useTypeSearchStore from "./store/typeSearch";
 
 function App() {
   const location = useLocation();
-  const { setCurrentUser } = useAuth();
-  const { setTypeSearch } = useTypeSearch();
+  const { setCurrentUser } = useAuthStore();
+  const { setTypeSearch } = useTypeSearchStore();
+  const { setQuerySearch } = useQuerySearchStore();
+  const { setActiveGenres } = useActiveGenresStore();
+  const { setIsLoading } = useCommonStore();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  useEffect(() => {
+    setQuerySearch("");
+
+    if (/tv/.test(location.pathname)) {
+      setTypeSearch("tv");
+    } else {
+      setTypeSearch("movie");
+    }
+
+    setActiveGenres([]);
+  }, [location.pathname, setQuerySearch, setTypeSearch, setActiveGenres]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const timeOut = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timeOut);
+  }, [location.pathname, setIsLoading]);
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (user) => {
@@ -33,14 +60,6 @@ function App() {
 
     return () => unSubscribe();
   }, [setCurrentUser]);
-
-  useEffect(() => {
-    if (/tv/.test(location.pathname)) {
-      setTypeSearch("tv");
-    } else {
-      setTypeSearch("movie");
-    }
-  }, [location.pathname, setTypeSearch]);
 
   return (
     <div className="App">

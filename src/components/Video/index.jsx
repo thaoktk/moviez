@@ -1,14 +1,17 @@
 import React from "react";
 import { getMovieEmbed, getTvEmbed } from "../../shared/utils";
-import useTvVideo from "../../store/tvVideo";
+import useTvVideoStore from "../../store/tvVideo";
 
 function Video({ type, film }) {
-  const { tvVideo } = useTvVideo();
-  
+  const { tvVideo } = useTvVideoStore();
+
   return (
     <div className="w-full">
+      {/* We're Sorry! */}
+      {/* We can't find the file you are looking for. It maybe got deleted by the owner or was removed due a copyright violation. */}
       <iframe
         className="md:min-h-[600px] min-h-[300px] w-full h-full"
+        title="Film Video Player"
         src={
           type === "movie"
             ? getMovieEmbed(film?.detail?.id)
@@ -18,7 +21,6 @@ function Video({ type, film }) {
                 tvVideo.episode_number
               )
         }
-        title="Film Video Player"
         frameBorder="0"
         allowFullScreen
       ></iframe>

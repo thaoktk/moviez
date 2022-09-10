@@ -1,7 +1,8 @@
-import { Image } from "@chakra-ui/react";
 import moment from "moment";
 import { BsFillStarFill } from "react-icons/bs";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
+import { alternativePoster } from "../../shared/constant";
 import { getImage } from "../../shared/utils";
 
 function Similar({ type, film }) {
@@ -12,10 +13,13 @@ function Similar({ type, film }) {
         {film?.similar?.map((item) => (
           <li key={item.id} className="mb-6 w-full">
             <Link to={`/${type}/${item.id}`} className="flex items-start">
-              <Image
-                className="w-[100px] h-[150px] rounded-lg mr-4"
-                objectFit="cover"
-                src={getImage("original", item?.poster_path)}
+              <LazyLoadImage
+                className="w-[100px] h-[150px] object-cover rounded-lg mr-4"
+                src={
+                  item?.poster_path
+                    ? getImage("original", item?.poster_path)
+                    : alternativePoster
+                }
                 alt={item.title || item.name}
               />
               <div className="">

@@ -11,6 +11,7 @@ import {
 function ModalMovie({
   isOpen,
   onClose,
+  title,
   children,
   hasSecondBtn,
   onClickSecondBtn,
@@ -20,7 +21,7 @@ function ModalMovie({
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent className="!bg-gray-800">
-          <ModalHeader className="text-white">Trailer</ModalHeader>
+          <ModalHeader className="text-white">{title}</ModalHeader>
           <ModalCloseButton className="text-white" />
           <ModalBody className="min-w-full">{children}</ModalBody>
           <ModalFooter>
@@ -35,7 +36,7 @@ function ModalMovie({
                 onClick={onClickSecondBtn}
                 className="px-8 py-2 text-white rounded-full hover:bg-black/40 transition-all"
               >
-                Yes
+                OK
               </button>
             )}
           </ModalFooter>

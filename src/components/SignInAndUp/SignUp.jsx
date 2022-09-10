@@ -1,10 +1,10 @@
-import { useToast } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { auth } from "../../firebase/config";
 import { setDocument } from "../../firebase/service";
+import useToastify from "../../hooks/useToastify";
 import { defaultAvatar } from "../../shared/constant";
 import { translateError } from "../../shared/utils";
 
@@ -27,15 +27,7 @@ function SignUp({ setIsSignIn }) {
     resolver: yupResolver(schema),
   });
 
-  const toast = useToast();
-
-  const showToast = (value) =>
-    toast({
-      ...value,
-      position: "top-right",
-      duration: 7000,
-      isClosable: true,
-    });
+  const showToast = useToastify();
 
   const onSubmitHandler = (data) => {
     const { email, password, userName } = data;

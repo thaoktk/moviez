@@ -24,22 +24,22 @@ const routes = [
     layout: LoginLayout,
   },
   {
-    path: "/movie/:id", // xong
+    path: "/movie/:id", // còn cái click category
     element: FilmDetail,
     layout: FilmLayout,
   },
   {
-    path: "/tv/:id", //xong
+    path: "/tv/:id", //
     element: FilmDetail,
     layout: FilmLayout,
   },
   {
-    path: "/movie/:id/watch", //xong
+    path: "/movie/:id/watch", //
     element: FilmWatch,
     layout: FilmLayout,
   },
   {
-    path: "/tv/:id/watch", //xong
+    path: "/tv/:id/watch", //
     element: FilmWatch,
     layout: FilmLayout,
   },
@@ -48,7 +48,7 @@ const routes = [
     element: Search,
   },
   {
-    path: "/category", //xong
+    path: "/category", // re render lại paginate
     element: Category,
   },
   {

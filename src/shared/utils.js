@@ -1,4 +1,4 @@
-import { FILM_URL, IMAGE_URL } from "./constant";
+import { FILM_URL_V2, IMAGE_URL } from "./constant";
 
 const translateError = (code) => {
   switch (code) {
@@ -17,9 +17,15 @@ const translateError = (code) => {
 
 const getImage = (size = "original", path) => `${IMAGE_URL}/${size}${path}`;
 
-const getMovieEmbed = (id) => `${FILM_URL}/movie?id=${id}`;
+const getMovieEmbed = (id) => `${FILM_URL_V2}/movie?id=${id}`;
 
 const getTvEmbed = (id, season, episode) =>
-  `${FILM_URL}/tv?id=${id}&s=${season}&e=${episode}`;
+`${FILM_URL_V2}/tv?id=${id}&s=${season}&e=${episode}`;
 
-export { translateError, getImage, getMovieEmbed, getTvEmbed };
+export {
+  translateError,
+  getImage,
+  getMovieEmbed,
+  getTvEmbed,
+};
+

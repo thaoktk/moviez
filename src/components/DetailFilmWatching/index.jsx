@@ -1,23 +1,19 @@
 import moment from "moment";
-import { BsFillStarFill, BsFillCalendarFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { BsFillCalendarFill, BsFillStarFill } from "react-icons/bs";
+import useTvVideoStore from "../../store/tvVideo";
 
 function DetailFilmWatching({ type, film }) {
+  const { tvVideo } = useTvVideoStore();
   return (
     <div className="mt-8 md:px-5">
-      <div className="flex md:flex-row flex-col items-start justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-4xl text-white font-medium">
           {film?.detail?.title || film?.detail?.name}
         </h2>
         {type === "tv" && (
-          <div className="md:mt-0 mt-5">
-            <p className="text-lg text-white md:text-end text-start">
-              Chapter three: The Case of The Missing Lifeguard
-            </p>
-            <p className="mt-3 text-lg text-white/50 md:text-end text-start">
-              Episode 3 - Season 3
-            </p>
-          </div>
+          <p className="text-xl text-white/70">
+            Episode {tvVideo.episode_number} - Season {tvVideo.season_number}
+          </p>
         )}
       </div>
       <div className="mt-5 flex items-center">
@@ -36,13 +32,13 @@ function DetailFilmWatching({ type, film }) {
           </span>
         </div>
       </div>
-      <ul className="mt-4 flex items-center gap-3">
-        {film?.detail?.genres?.slice(0, 3).map((genre) => (
+      <ul className="mt-4 flex flex-wrap items-center gap-3">
+        {film?.detail?.genres?.map((genre) => (
           <li
-            className="text-lg text-white/60 px-3 py-1 rounded-full border border-1 border-gray-400 hover:text-white hover:border-white transition-all"
+            className="px-3 py-1 text-lg text-white bg-white/20 rounded-full border-white"
             key={genre.id}
           >
-            <Link to="/category">{genre.name}</Link>
+            {genre.name}
           </li>
         ))}
       </ul>

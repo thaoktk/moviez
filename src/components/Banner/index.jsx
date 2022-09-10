@@ -1,7 +1,8 @@
-import { Image, useDisclosure } from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
 import { BiPlay } from "react-icons/bi";
 import { BsFillStarFill } from "react-icons/bs";
-import { TRAILER_URL } from "../../shared/constant";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { alternativePoster, TRAILER_URL } from "../../shared/constant";
 import { getImage } from "../../shared/utils";
 import ModalMovie from "../ModalMovie";
 
@@ -10,10 +11,13 @@ function Banner({ type, film }) {
 
   return (
     <div className="w-full h-full relative">
-      <Image
-        className="w-full h-[500px] rounded-lg opacity-50"
-        objectFit="cover"
-        src={getImage("original", film?.detail?.backdrop_path)}
+      <LazyLoadImage
+        className="w-full h-[550px] object-cover rounded-lg opacity-50"
+        src={
+          film?.detail?.backdrop_path
+            ? getImage("original", film?.detail?.backdrop_path)
+            : alternativePoster
+        }
         alt={film?.detail?.title}
       />
       <div className="absolute bottom-5 md:left-10 left-5 px-10 py-8 flex md:flex-row flex-col items-center">
@@ -48,7 +52,7 @@ function Banner({ type, film }) {
           {type.charAt(0).toUpperCase() + type.slice(1)}
         </span>
       </div>
-      <ModalMovie isOpen={isOpen} onClose={onClose}>
+      <ModalMovie isOpen={isOpen} onClose={onClose} title="Trailer">
         <div className="w-full h-full">
           {(film?.trailer?.key && (
             <iframe

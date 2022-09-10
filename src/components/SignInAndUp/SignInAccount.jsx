@@ -1,10 +1,10 @@
-import { useToast } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { auth } from "../../firebase/config";
+import useToastify from "../../hooks/useToastify";
 import { translateError } from "../../shared/utils";
 
 const schema = yup.object().shape({
@@ -23,16 +23,8 @@ function SignInAccount() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const toast = useToast();
-
-  const showToast = (value) =>
-    toast({
-      ...value,
-      position: "top-right",
-      duration: 7000,
-      isClosable: true,
-    });
-
+  const showToast = useToastify();
+  
   const onSubmitHandler = (data) => {
     const { email, password } = data;
     signInWithEmailAndPassword(auth, email, password)

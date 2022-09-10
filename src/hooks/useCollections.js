@@ -1,12 +1,18 @@
-import { onSnapshot, orderBy, query, where } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 
-function useCollections(collection, condition = null) {
+const useCollections = (collect, condition) => {
   const [documents, setDocuments] = useState([]);
 
   useEffect(() => {
-    let colRef = collection(db, collection);
+    let colRef = collection(db, collect);
     const queryOrder = query(colRef, orderBy("createdAt"));
 
     const { fieldName, operator, compareValue } = condition;
@@ -29,9 +35,9 @@ function useCollections(collection, condition = null) {
     return () => {
       unSubscribe();
     };
-  }, [collection, condition]);
+  }, [collect, condition]);
 
   return documents;
-}
+};
 
 export default useCollections;

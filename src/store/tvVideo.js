@@ -1,6 +1,6 @@
 import create from "zustand";
 
-const useTvVideo = create((set) => ({
+const useTvVideoStore = create((set) => ({
   tvVideo: {
     season_number: 1,
     episode_number: 1,
@@ -8,4 +8,4 @@ const useTvVideo = create((set) => ({
   setTvVideo: (payload) => set((state) => ({ tvVideo: { ...payload } })),
 }));
 
-export default useTvVideo;
+export default useTvVideoStore;

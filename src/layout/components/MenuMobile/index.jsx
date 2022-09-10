@@ -18,14 +18,24 @@ import {
 } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import { auth } from "../../../firebase/config";
-import useAuth from "../../../store/auth";
+import useToastify from "../../../hooks/useToastify";
+import useAuthStore from "../../../store/auth";
 
 function MenuMobile({ isOpen, onClose }) {
-  const { currentUser, setCurrentUser } = useAuth();
   const location = useLocation();
+  const { currentUser, setCurrentUser } = useAuthStore();
 
-  const handleLogout = async () => {
-    await signOut(auth);
+  const showToast = useToastify();
+
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      showToast({
+        title: "Logout successfully.",
+        description: "We will direct you to Homepage.",
+        status: "success",
+      });
+    });
+
     setCurrentUser({});
     onClose();
   };

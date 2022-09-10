@@ -6,15 +6,16 @@ function useCollect(collection, id) {
   const [document, setDocument] = useState({});
 
   useEffect(() => {
-    const docRef = doc(db, collection, id);
-    const unSubscribe = onSnapshot(docRef, (doc) => {
-      setDocument({
-        ...doc.data(),
-        id: doc.id,
+    if (id) {
+      const docRef = doc(db, collection, id);
+      const unSubscribe = onSnapshot(docRef, (doc) => {
+        setDocument({
+          ...doc.data(),
+          id: doc.id,
+        });
       });
-    });
-
-    return () => unSubscribe();
+      return () => unSubscribe();
+    }
   }, [collection, id]);
 
   return document;

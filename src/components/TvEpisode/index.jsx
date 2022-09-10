@@ -4,15 +4,16 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Image,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { getTvVideo } from "../../shared/actions";
+import { alternativeImage } from "../../shared/constant";
 import { getImage } from "../../shared/utils";
-import useTvVideo from "../../store/tvVideo";
+import useTvVideoStore from "../../store/tvVideo";
 
 function TvEpisode({ film }) {
-  const { tvVideo, setTvVideo } = useTvVideo();
+  const { tvVideo, setTvVideo } = useTvVideoStore();
   const [seasonList, setSeasonList] = useState([]);
 
   useEffect(() => {
@@ -33,14 +34,22 @@ function TvEpisode({ film }) {
             <li key={season.id} className="mb-3 rounded-md">
               <AccordionItem className="border-none">
                 <AccordionButton className="flex !items-start">
-                  <Image
-                    className="w-[80px] h-[120px] rounded-lg mr-4"
-                    objectFit="cover"
-                    src={getImage("original", season?.poster_path)}
+                  <LazyLoadImage
+                    className="w-[80px] h-[120px] object-cover rounded-lg mr-4"
+                    src={
+                      season?.poster_path
+                        ? getImage("original", season?.poster_path)
+                        : alternativeImage
+                    }
                     alt={season.name}
                   />
                   <div className="">
-                    <p className="text-xl text-white text-start font-normal">
+                    <p
+                      className={`${
+                        season.season_number === tvVideo.season_number &&
+                        "!text-red"
+                      } text-xl text-white text-start font-normal`}
+                    >
                       {season.name}
                     </p>
                     <p className="mt-3 text-xl text-white text-start font-normal">
@@ -73,10 +82,13 @@ function TvEpisode({ film }) {
                           {episode?.episode_number}
                         </span>
                         <div className="flex items-center">
-                          <Image
-                            className="max-w-[150px] h-[60px] rounded-md mr-4"
-                            objectFit="cover"
-                            src={getImage("original", episode?.still_path)}
+                          <LazyLoadImage
+                            className="max-w-[150px] h-[60px] object-cover rounded-md mr-4"
+                            src={
+                              episode?.still_path
+                                ? getImage("original", episode?.still_path)
+                                : alternativeImage
+                            }
                             alt={episode.name}
                           />
                           <p className="text-xs text-white/70">

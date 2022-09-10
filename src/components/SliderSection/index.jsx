@@ -2,24 +2,18 @@ import { useEffect, useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { Autoplay, FreeMode, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import axiosClient from "../../shared/axiosClient";
+import { getListFilmHome } from "../../shared/actions";
 import FilmItem from "../FilmItem";
 function SliderSection({ heading, type, paramSearch }) {
   const [swiper, setSwiper] = useState();
-  const [filmList, setFilmList] = useState([]);
+  const [listFilms, setListFilms] = useState([]);
 
   useEffect(() => {
-    const getData = async () => {
-      if (paramSearch === "trending") {
-        const res = await axiosClient.get(`/${paramSearch}/${type}/week`);
-        setFilmList(res.data.results);
-      } else {
-        const res = await axiosClient.get(`/${type}/${paramSearch}`);
-        setFilmList(res.data.results);
+    getListFilmHome(type, paramSearch).then((res) => {
+      if (res) {
+        setListFilms(res);
       }
-    };
-
-    getData();
+    });
   }, [type, paramSearch]);
 
   return (
@@ -65,7 +59,7 @@ function SliderSection({ heading, type, paramSearch }) {
           onSwiper={(swiper) => setSwiper(swiper)}
           className="!absolute !top-0 !left-0 !w-full !h-full !rounded-lg"
         >
-          {filmList?.map((film) => (
+          {listFilms?.map((film) => (
             <SwiperSlide
               key={film.id}
               className="relative film-section rounded-lg overflow-hidden"

@@ -1,8 +1,8 @@
 import create from "zustand";
 
-const useFilmDetail = create((set) => ({
+const useFilmDetailStore = create((set) => ({
   film: {},
   setFilm: (payload) => set(() => ({ film: payload })),
 }));
 
-export default useFilmDetail;
+export default useFilmDetailStore;
