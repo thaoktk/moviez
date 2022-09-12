@@ -36,7 +36,7 @@ function Profile() {
           setListFilms([]);
         }
       });
-    } else {
+    } else if (activeTab === "history") {
       getListFilmsProfile(user.historyFilms).then(async (res) => {
         if (res) {
           const list = await Promise.all([...res]);
@@ -53,7 +53,7 @@ function Profile() {
       updateDocument("users", currentUser.uid, {
         favoriteFilms: [],
       });
-    } else {
+    } else if (activeTab === "history") {
       updateDocument("users", currentUser.uid, {
         historyFilms: [],
       });
@@ -64,13 +64,13 @@ function Profile() {
     if (activeTab === "favorite") {
       updateDocument("users", currentUser.uid, {
         favoriteFilms: user.favoriteFilms.filter(
-          (film) => film.filmId !== filmId
+          (film) => film.filmId !== filmId.toString()
         ),
       });
-    } else {
+    } else if (activeTab === "history") {
       updateDocument("users", currentUser.uid, {
         historyFilms: user.historyFilms.filter(
-          (film) => film.filmId !== filmId
+          (film) => film.filmId !== filmId.toString()
         ),
       });
     }

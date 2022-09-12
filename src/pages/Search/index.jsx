@@ -5,7 +5,7 @@ import FilmItem from "../../components/FilmItem";
 import Pagination from "../../components/Pagination";
 import SearchSection from "../../components/SearchSection";
 import { getFilmSearch } from "../../shared/actions";
-import useQuerySearchStore from "../../store/querySearch";
+import useQuerySearchStore from "../../store/search";
 
 function Search() {
   const { querySearch } = useQuerySearchStore();

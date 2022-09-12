@@ -1,9 +1,9 @@
 import React from "react";
 import { getMovieEmbed, getTvEmbed } from "../../shared/utils";
-import useTvVideoStore from "../../store/tvVideo";
+import useFilmDetailStore from "../../store/film";
 
 function Video({ type, film }) {
-  const { tvVideo } = useTvVideoStore();
+  const { tvVideo } = useFilmDetailStore();
 
   return (
     <div className="w-full">

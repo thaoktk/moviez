@@ -13,7 +13,7 @@ const useCollections = (collect, condition) => {
 
   useEffect(() => {
     let colRef = collection(db, collect);
-    const queryOrder = query(colRef, orderBy("createdAt"));
+    const queryOrder = query(colRef, orderBy("createdAt", "desc"));
 
     const { fieldName, operator, compareValue } = condition;
     if (condition) {

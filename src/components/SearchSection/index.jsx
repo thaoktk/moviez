@@ -3,11 +3,11 @@ import { BiSearch } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import useDebounce from "../../hooks/useDebounce";
 import { getResultSearch } from "../../shared/actions";
-import useQuerySearchStore from "../../store/querySearch";
+import useSearchStore from "../../store/search";
 import ResultSearch from "./ResultSearch";
 
 function SearchSection() {
-  const { setQuerySearch } = useQuerySearchStore();
+  const { setQuerySearch } = useSearchStore();
   const [valueSearch, setValueSearch] = useState("");
   const [listResultSearch, setListResultSearch] = useState([]);
   const [showResultSearch, setShowResultSearch] = useState(false);

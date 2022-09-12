@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { auth } from "../../firebase/config";
 import useToastify from "../../hooks/useToastify";
 import { translateError } from "../../shared/utils";
+import useCommonStore from "../../store/common";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("Email is required!"),
@@ -14,6 +15,7 @@ const schema = yup.object().shape({
 
 function SignInAccount() {
   const navigate = useNavigate();
+  const { path } = useCommonStore();
 
   const {
     register,
@@ -24,20 +26,19 @@ function SignInAccount() {
     resolver: yupResolver(schema),
   });
   const showToast = useToastify();
-  
+
   const onSubmitHandler = (data) => {
     const { email, password } = data;
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         showToast({
           title: "Login successfully.",
-          description: "We will direct you to Homepage",
           status: "success",
         });
-        
+
         setTimeout(() => {
-          navigate("/")
-        }, 2000)
+          navigate(`${path}`);
+        }, 2000);
       })
       .catch((err) => {
         showToast({

@@ -1,9 +1,9 @@
 import moment from "moment";
 import { BsFillCalendarFill, BsFillStarFill } from "react-icons/bs";
-import useTvVideoStore from "../../store/tvVideo";
+import useFilmDetailStore from "../../store/film";
 
 function DetailFilmWatching({ type, film }) {
-  const { tvVideo } = useTvVideoStore();
+  const { tvVideo } = useFilmDetailStore();
   return (
     <div className="mt-8 md:px-5">
       <div className="flex flex-wrap items-center justify-between gap-2">

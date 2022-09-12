@@ -1,13 +1,13 @@
 import React from "react";
 import { BiSearch } from "react-icons/bi";
-import useQuerySearchStore from "../../store/querySearch";
+import useSearchStore from "../../store/search";
 
 function ResultSearch({
   listResultSearch,
   setValueSearch,
   setShowResultSearch,
 }) {
-  const { setQuerySearch } = useQuerySearchStore();
+  const { setQuerySearch } = useSearchStore();
   return (
     <div className="flex items-center justify-center">
       <ul className="px-3 py-2 bg-gray-800 max-h-[200px] w-[450px] overflow-y-auto rounded-b-lg">

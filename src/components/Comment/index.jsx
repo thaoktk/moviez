@@ -1,12 +1,11 @@
 import { Avatar } from "@chakra-ui/react";
-import moment from "moment";
 import React, { useMemo, useState } from "react";
-import { AiOutlineMore } from "react-icons/ai";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { Link, useParams } from "react-router-dom";
-import { addDocument } from "../../firebase/service";
+import { addDocument, deleteDocument } from "../../firebase/service";
 import useCollections from "../../hooks/useCollections";
 import useAuthStore from "../../store/auth";
+import CommentUser from "./CommentUser";
 
 function Comment() {
   const { id } = useParams();
@@ -39,6 +38,10 @@ function Comment() {
     }
   };
 
+  const handleDeleteComment = (commentId) => {
+    deleteDocument("comments", commentId);
+  };
+
   return (
     <div className="mt-8 md:px-5">
       <p className="text-2xl text-white font-medium">
@@ -48,7 +51,7 @@ function Comment() {
         <div className="mt-3 flex justify-center">
           <p className="text-lg text-white">
             You need to{" "}
-            <Link to="/login" className="text-red font-medium">
+            <Link to={`/login`} className="text-red font-medium">
               Login
             </Link>{" "}
             to comment
@@ -71,25 +74,11 @@ function Comment() {
       )}
       <ul className="mt-8 max-h-[700px] overflow-y-auto">
         {comments.map((comment) => (
-          <li key={comment.id} className="mb-8 flex items-start">
-            <Avatar name={comment.displayName} src={comment.photoURL} />
-            <div className="ml-4">
-              <p className="text-lg text-white font-medium">
-                {comment.displayName}
-              </p>
-              <p className="mt-1 text-white/90">{comment.comment}</p>
-              <p className="mt-2 text-white/70">
-                {moment(
-                  new Date(comment?.createdAt?.seconds * 1000),
-                  "YYYYMMDD"
-                ).format("lll")}
-              </p>
-            </div>
-            <div className="ml-6">
-              <button>
-                <AiOutlineMore className="text-xl text-white/90" />
-              </button>
-            </div>
+          <li key={comment.id} className="mb-8">
+            <CommentUser
+              comment={comment}
+              handleDeleteComment={handleDeleteComment}
+            />
           </li>
         ))}
       </ul>

@@ -7,8 +7,8 @@ function Pagination({ pageCount, activePage, setActivePage }) {
         previousLabel="← Prev"
         nextLabel="Next →"
         pageCount={pageCount}
-        pageRangeDisplayed={2}
         initialPage={0}
+        forcePage={activePage - 1}
         onPageChange={({ selected }) => setActivePage(selected + 1)}
         containerClassName="flex flex-wrap items-center justify-center gap-4 bg-transparent"
         pageClassName=" px-2 text-lg text-white"

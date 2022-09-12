@@ -7,12 +7,12 @@ import Similar from "../../components/Similar";
 import { getDataFilm } from "../../shared/actions";
 import useCommonStore from "../../store/common";
 import useFilmDetailStore from "../../store/film";
-import useTypeSearchStore from "../../store/typeSearch";
+import useSearchStore from "../../store/search";
 
 function FilmDetail() {
   const { id } = useParams();
   const { isLoading } = useCommonStore();
-  const { typeSearch } = useTypeSearchStore();
+  const { typeSearch } = useSearchStore();
   const { film, setFilm } = useFilmDetailStore();
 
   useEffect(() => {

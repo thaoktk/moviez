@@ -9,16 +9,14 @@ import routes from "./routes";
 import useActiveGenresStore from "./store/activeGenres";
 import useAuthStore from "./store/auth";
 import useCommonStore from "./store/common";
-import useQuerySearchStore from "./store/querySearch";
-import useTypeSearchStore from "./store/typeSearch";
+import useSearchStore from "./store/search";
 
 function App() {
   const location = useLocation();
   const { setCurrentUser } = useAuthStore();
-  const { setTypeSearch } = useTypeSearchStore();
-  const { setQuerySearch } = useQuerySearchStore();
+  const { setTypeSearch, setQuerySearch } = useSearchStore();
   const { setActiveGenres } = useActiveGenresStore();
-  const { setIsLoading } = useCommonStore();
+  const { setIsLoading, setPath } = useCommonStore();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,7 +32,17 @@ function App() {
     }
 
     setActiveGenres([]);
-  }, [location.pathname, setQuerySearch, setTypeSearch, setActiveGenres]);
+
+    if (location.pathname !== "/login") {
+      setPath(location.pathname);
+    }
+  }, [
+    location.pathname,
+    setQuerySearch,
+    setTypeSearch,
+    setActiveGenres,
+    setPath,
+  ]);
 
   useEffect(() => {
     setIsLoading(true);

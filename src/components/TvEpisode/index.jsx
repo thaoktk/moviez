@@ -10,10 +10,10 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { getTvVideo } from "../../shared/actions";
 import { alternativeImage } from "../../shared/constant";
 import { getImage } from "../../shared/utils";
-import useTvVideoStore from "../../store/tvVideo";
+import useFilmDetailStore from "../../store/film";
 
 function TvEpisode({ film }) {
-  const { tvVideo, setTvVideo } = useTvVideoStore();
+  const { tvVideo, setTvVideo } = useFilmDetailStore();
   const [seasonList, setSeasonList] = useState([]);
 
   useEffect(() => {

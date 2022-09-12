@@ -9,13 +9,13 @@ import Video from "../../components/Video";
 import { getDataFilm } from "../../shared/actions";
 import useCommonStore from "../../store/common";
 import useFilmDetailStore from "../../store/film";
-import useTypeSearchStore from "../../store/typeSearch";
+import useSearchStore from "../../store/search";
 
 function FilmWatch() {
   const { id } = useParams();
   // zustand store
   const { isLoading } = useCommonStore();
-  const { typeSearch } = useTypeSearchStore();
+  const { typeSearch } = useSearchStore();
   const { film, setFilm } = useFilmDetailStore();
 
   useEffect(() => {

@@ -1,4 +1,3 @@
-import { useToast } from "@chakra-ui/react";
 import {
   FacebookAuthProvider,
   GoogleAuthProvider,
@@ -9,21 +8,16 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/config";
 import { setDocument } from "../../firebase/service";
+import useToastify from "../../hooks/useToastify";
+import useCommonStore from "../../store/common";
 
 const GoogleProvider = new GoogleAuthProvider();
 const FacebookProvider = new FacebookAuthProvider();
 
 function SignInWith() {
   const navigate = useNavigate();
-  const toast = useToast();
-
-  const showToast = (value) =>
-    toast({
-      ...value,
-      position: "top-right",
-      duration: 7000,
-      isClosable: true,
-    });
+  const { path } = useCommonStore();
+  const showToast = useToastify();
 
   const addUser = (tokenResponse, user) => {
     if (tokenResponse?.isNewUser) {
@@ -42,12 +36,11 @@ function SignInWith() {
 
       showToast({
         title: "Login successfully.",
-        description: "We will direct you to Homepage",
         status: "success",
       });
 
       setTimeout(() => {
-        navigate("/");
+        navigate(`${path}`);
       }, 2000);
     });
   };

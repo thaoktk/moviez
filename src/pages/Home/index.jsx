@@ -3,10 +3,10 @@ import React from "react";
 import SliderSection from "../../components/SliderSection";
 import SliderTopHome from "../../components/SliderTopHome";
 import useCommonStore from "../../store/common";
-import useTypeSearchStore from "../../store/typeSearch";
+import useSearchStore from "../../store/search";
 
 function Home() {
-  const { typeSearch } = useTypeSearchStore();
+  const { typeSearch } = useSearchStore();
   const { isLoading } = useCommonStore();
 
   return (
