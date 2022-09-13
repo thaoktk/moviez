@@ -4,7 +4,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 import { signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
@@ -18,6 +18,10 @@ import MenuMobile from "../MenuMobile";
 
 function Header() {
   const { currentUser, setCurrentUser } = useAuthStore();
+  console.log(
+    "🚀 ~ file: index.jsx ~ line 21 ~ Header ~ currentUser",
+    currentUser.photoUrl
+  );
   const [sticky, setSticky] = useState("");
 
   const showToast = useToastify();
@@ -41,7 +45,6 @@ function Header() {
     signOut(auth).then(() => {
       showToast({
         title: "Logout successfully.",
-        description: "We will direct you to Homepage.",
         status: "success",
       });
     });
@@ -62,7 +65,7 @@ function Header() {
           <div className="px-3 lg:block hidden">
             <Menu className="">
               <MenuButton>
-                <Avatar size="sm" src={currentUser.photoURL} />
+                <Avatar size="sm" src={currentUser.photoUrl} />
               </MenuButton>
               <MenuList className="!relative !z-50 !bg-gray-800 !border-gray-800">
                 <MenuItem className="!text-white hover:!bg-gray-600 focus:!bg-gray-600">

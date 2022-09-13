@@ -25,6 +25,7 @@ function CommentUser({ comment, handleDeleteComment }) {
     if (commentValue.length > 0) {
       updateDocument("comments", commentId, {
         comment: commentValue,
+        isEdited: true,
       });
 
       setCommentValue("");
@@ -75,15 +76,20 @@ function CommentUser({ comment, handleDeleteComment }) {
         ) : (
           <p className="mt-1 text-white/90">{comment.comment}</p>
         )}
-        <button
-          onClick={() => {
-            setIsReply((prev) => !prev);
-            setCommentReply(comment.id);
-          }}
-          className="mt-1 text-sm text-white/70 hover:text-red transition-all"
-        >
-          Reply
-        </button>
+        <div className="mt-1 flex items-center">
+          <button
+            onClick={() => {
+              setIsReply((prev) => !prev);
+              setCommentReply(comment.id);
+            }}
+            className="text-sm text-white/70 hover:text-red transition-all"
+          >
+            Reply
+          </button>
+          <p className="ml-2 text-sm text-white/70">
+            {comment.isEdited ? "Edited" : ""}
+          </p>
+        </div>
         {/* {isReply && commentReply === comment.id && (
           <CommentReply
           />

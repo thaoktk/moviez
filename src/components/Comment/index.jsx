@@ -11,6 +11,7 @@ function Comment() {
   const { id } = useParams();
   const { currentUser } = useAuthStore();
   const [commentValue, setCommentValue] = useState("");
+  const [showMore, setShowMore] = useState(false);
 
   const commentCondition = useMemo(() => {
     return {
@@ -22,6 +23,8 @@ function Comment() {
 
   const comments = useCollections("comments", commentCondition);
 
+  const commentsRender = showMore ? comments : comments.slice(0, 5);
+
   const handleAddComment = (e) => {
     e.preventDefault();
 
@@ -32,6 +35,7 @@ function Comment() {
         photoURL: currentUser.photoURL,
         comment: commentValue,
         filmId: id,
+        isEdited: false,
       });
 
       setCommentValue("");
@@ -73,7 +77,7 @@ function Comment() {
         </form>
       )}
       <ul className="mt-8 max-h-[700px] overflow-y-auto">
-        {comments.map((comment) => (
+        {commentsRender.map((comment) => (
           <li key={comment.id} className="mb-8">
             <CommentUser
               comment={comment}
@@ -82,6 +86,12 @@ function Comment() {
           </li>
         ))}
       </ul>
+      <button
+        onClick={() => setShowMore((prev) => !prev)}
+        className="mt-3 text-md text-white/70 hover:text-red transition-all"
+      >
+        {comments.length > 5 && ((showMore && "Show less") || "Show more")}
+      </button>
     </div>
   );
 }

@@ -81,7 +81,7 @@ function SettingProfile() {
         <Avatar
           size="2xl"
           name={currentUser.displayName}
-          src={currentUser.photoURL}
+          src={currentUser.photoUrl}
         />
         <div className="mt-8">
           <form action="" className="w-full">

@@ -5,7 +5,7 @@ import {
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
-  DrawerOverlay
+  DrawerOverlay,
 } from "@chakra-ui/react";
 import { signOut } from "firebase/auth";
 import {
@@ -14,7 +14,7 @@ import {
   BiLogInCircle,
   BiLogOutCircle,
   BiSearch,
-  BiTv
+  BiTv,
 } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import { auth } from "../../../firebase/config";
@@ -31,7 +31,6 @@ function MenuMobile({ isOpen, onClose }) {
     signOut(auth).then(() => {
       showToast({
         title: "Logout successfully.",
-        description: "We will direct you to Homepage.",
         status: "success",
       });
     });
@@ -133,7 +132,7 @@ function MenuMobile({ isOpen, onClose }) {
                     <Avatar
                       size="sm"
                       className="mr-4"
-                      src={currentUser.photoURL}
+                      src={currentUser.photoUrl}
                     />
                     <span>{currentUser.displayName}</span>
                   </Link>
