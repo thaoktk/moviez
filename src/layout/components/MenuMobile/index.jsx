@@ -132,7 +132,7 @@ function MenuMobile({ isOpen, onClose }) {
                     <Avatar
                       size="sm"
                       className="mr-4"
-                      src={currentUser.photoUrl}
+                      src={currentUser.photoURL}
                     />
                     <span>{currentUser.displayName}</span>
                   </Link>

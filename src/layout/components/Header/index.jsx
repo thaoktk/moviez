@@ -18,10 +18,6 @@ import MenuMobile from "../MenuMobile";
 
 function Header() {
   const { currentUser, setCurrentUser } = useAuthStore();
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 21 ~ Header ~ currentUser",
-    currentUser.photoUrl
-  );
   const [sticky, setSticky] = useState("");
 
   const showToast = useToastify();
@@ -65,7 +61,7 @@ function Header() {
           <div className="px-3 lg:block hidden">
             <Menu className="">
               <MenuButton>
-                <Avatar size="sm" src={currentUser.photoUrl} />
+                <Avatar size="sm" src={currentUser.photoURL} />
               </MenuButton>
               <MenuList className="!relative !z-50 !bg-gray-800 !border-gray-800">
                 <MenuItem className="!text-white hover:!bg-gray-600 focus:!bg-gray-600">

@@ -24,7 +24,7 @@ function SignInWith() {
       setDocument("users", user.uid, {
         uid: user.uid,
         displayName: user.displayName,
-        photoUrl: user.photoURL,
+        photoURL: user.photoURL,
         email: user.email,
       });
     }
@@ -57,7 +57,7 @@ function SignInWith() {
       });
 
       setTimeout(() => {
-        navigate("/");
+        navigate(`${path}`);
       }, 2000);
     });
   };

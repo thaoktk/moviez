@@ -2,6 +2,7 @@ import { Avatar, useDisclosure } from "@chakra-ui/react";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useState } from "react";
 import { RiSendPlaneFill } from "react-icons/ri";
+import { v4 } from "uuid";
 import { storage } from "../../firebase/config";
 import { updateDocument } from "../../firebase/service";
 import useToastify from "../../hooks/useToastify";
@@ -40,7 +41,7 @@ function SettingProfile() {
     e.preventDefault();
 
     if (!e.target.files[0]) return;
-    const storageRef = ref(storage, `images/${e.target.files[0].name}`);
+    const storageRef = ref(storage, `images/${e.target.files[0].name + v4()}`);
     const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
 
     uploadTask.on("state_changed", () => {
@@ -50,13 +51,13 @@ function SettingProfile() {
         });
 
         setCurrentUser({ ...currentUser, photoURL: downloadURL });
+        
+        showToast({
+          title: "Successfully.",
+          description: "Change avatar successfully.",
+          status: "success",
+        });
       });
-    });
-
-    showToast({
-      title: "Successfully.",
-      description: "Change avatar successfully.",
-      status: "success",
     });
   };
 
@@ -81,7 +82,7 @@ function SettingProfile() {
         <Avatar
           size="2xl"
           name={currentUser.displayName}
-          src={currentUser.photoUrl}
+          src={currentUser.photoURL}
         />
         <div className="mt-8">
           <form action="" className="w-full">
