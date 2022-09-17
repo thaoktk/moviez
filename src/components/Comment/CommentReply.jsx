@@ -1,12 +1,13 @@
 import { Avatar } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
+import { BsXLg } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 import { addDocument } from "../../firebase/service";
 import useAuthStore from "../../store/auth";
 
-function CommentReply() {
+function CommentReply({ setIsReply }) {
   const { id } = useParams();
   const { currentUser } = useAuthStore();
   const [commentValue, setCommentValue] = useState("");
@@ -21,6 +22,8 @@ function CommentReply() {
         photoURL: currentUser.photoURL,
         comment: commentValue,
         filmId: id,
+        isEdited: false,
+        isReply: true,
       });
 
       setCommentValue("");
@@ -43,6 +46,9 @@ function CommentReply() {
           />
           <button type="submit" className="ml-3 px-3">
             <RiSendPlaneFill className="text-4xl text-red" />
+          </button>
+          <button onClick={() => setIsReply(false)} className="px-3">
+            <BsXLg className="text-2xl text-red" />
           </button>
         </form>
       </div>

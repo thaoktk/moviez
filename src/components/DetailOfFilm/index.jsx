@@ -18,9 +18,9 @@ function DetailOfFilm({ type, film }) {
 
   const showToast = useToastify();
 
-  const handleClickLikeBtn = ({ type, filmId }) => {
+  const handleClickFavBtn = ({ type, filmId }) => {
     if (currentUser.uid) {
-      if (!user.favoriteFilms) {
+      if (!user.favoriteFilms || user.favoriteFilms.length <= 0) {
         updateDocument("users", currentUser.uid, {
           favoriteFilms: [{ type, filmId }],
         });
@@ -28,7 +28,7 @@ function DetailOfFilm({ type, film }) {
         if (user.favoriteFilms.some((film) => film.filmId === filmId)) {
           updateDocument("users", currentUser.uid, {
             favoriteFilms: user.favoriteFilms.filter(
-              (film) => film.filmId !== filmId
+              (film) => film.filmId !== filmId.toString()
             ),
           });
         } else {
@@ -48,7 +48,7 @@ function DetailOfFilm({ type, film }) {
 
   const handleClickWatchBtn = ({ type, filmId }) => {
     if (currentUser.uid) {
-      if (!user.historyFilms) {
+      if (!user.historyFilms || user.historyFilms.length <= 0) {
         updateDocument("users", currentUser.uid, {
           historyFilms: [{ type, filmId }],
         });
@@ -96,7 +96,7 @@ function DetailOfFilm({ type, film }) {
               <span className="text-lg text-white font-semibold">WATCH</span>
             </Link>
             <button
-              onClick={() => handleClickLikeBtn({ type, filmId: id })}
+              onClick={() => handleClickFavBtn({ type, filmId: id })}
               className={`${
                 (user?.favoriteFilms?.some((film) => film.filmId === id) &&
                   "active") ||

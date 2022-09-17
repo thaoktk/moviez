@@ -2,7 +2,7 @@ import { Avatar } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { Link, useParams } from "react-router-dom";
-import { addDocument, deleteDocument } from "../../firebase/service";
+import { addDocument } from "../../firebase/service";
 import useCollections from "../../hooks/useCollections";
 import useAuthStore from "../../store/auth";
 import CommentUser from "./CommentUser";
@@ -35,15 +35,14 @@ function Comment() {
         photoURL: currentUser.photoURL,
         comment: commentValue,
         filmId: id,
+        unLikes: [],
+        likes: [],
+        replies: [],
         isEdited: false,
       });
 
       setCommentValue("");
     }
-  };
-
-  const handleDeleteComment = (commentId) => {
-    deleteDocument("comments", commentId);
   };
 
   return (
@@ -79,10 +78,7 @@ function Comment() {
       <ul className="mt-8 max-h-[700px] overflow-y-auto">
         {commentsRender.map((comment) => (
           <li key={comment.id} className="mb-8">
-            <CommentUser
-              comment={comment}
-              handleDeleteComment={handleDeleteComment}
-            />
+            <CommentUser comment={comment} role="parent" />
           </li>
         ))}
       </ul>

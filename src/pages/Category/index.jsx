@@ -21,7 +21,11 @@ function Category() {
     getFilmsByGenres(activeTab, activeGenres, activePage).then((res) => {
       if (res) {
         setListFilms(res.results);
-        setTotalPages(res.total_pages);
+        if (res.total_pages > 500) {
+          setTotalPages(500);
+        } else {
+          setTotalPages(res.total_pages);
+        }
       }
     });
 
@@ -33,7 +37,7 @@ function Category() {
 
   useEffect(() => {
     setActivePage(1);
-  }, [activeTab]);
+  }, [activeTab, activeGenres]);
 
   return (
     <div className="flex-1">
@@ -43,6 +47,11 @@ function Category() {
         </div>
       )) || (
         <div className="">
+          <div className="mb-10">
+            <p className="text-4xl text-white text-center font-semibold">
+              Find a movie or tv show that best fit you
+            </p>
+          </div>
           <ul className="mb-5 flex items-center">
             <li
               onClick={() => setActiveTab("movie")}

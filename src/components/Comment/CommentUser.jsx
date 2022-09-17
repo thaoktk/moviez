@@ -2,24 +2,29 @@ import { Avatar, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import moment from "moment";
 import React, { useState } from "react";
 import { AiOutlineMore } from "react-icons/ai";
-import { BsXLg } from "react-icons/bs";
+import {
+  BsFillEmojiAngryFill,
+  BsFillEmojiHeartEyesFill,
+  BsXLg,
+} from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { updateDocument } from "../../firebase/service";
+import { deleteDocument, updateDocument } from "../../firebase/service";
 import useToastify from "../../hooks/useToastify";
 import useAuthStore from "../../store/auth";
-import CommentReply from "./CommentReply";
 
-function CommentUser({ comment, handleDeleteComment }) {
+function CommentUser({ comment, role = "parent" }) {
   const { currentUser } = useAuthStore();
   const [commentValue, setCommentValue] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [commentEdit, setCommentEdit] = useState(0);
-  const [isReply, setIsReply] = useState(false);
-  const [commentReply, setCommentReply] = useState(0);
 
   const showToast = useToastify();
 
-  const handleUpdateComment = (e, commentId) => {
+  const handleDeleteComment = (commentId) => {
+    deleteDocument("comments", commentId);
+  };
+
+  const handleUpdateContentComment = (e, commentId) => {
     e.preventDefault();
 
     if (commentValue.length > 0) {
@@ -39,9 +44,95 @@ function CommentUser({ comment, handleDeleteComment }) {
     }
   };
 
+  const handleLikeComment = (commentId) => {
+    if (currentUser.uid) {
+      if (comment.likes.length <= 0) {
+        if (comment.unLikes.some((unLike) => unLike === currentUser.uid)) {
+          updateDocument("comments", commentId, {
+            likes: [currentUser.uid],
+            unLikes: comment.unLikes.filter(
+              (unLike) => unLike !== currentUser.uid
+            ),
+          });
+        } else {
+          updateDocument("comments", commentId, {
+            likes: [currentUser.uid],
+          });
+        }
+      } else {
+        if (comment.likes.some((like) => like === currentUser.uid)) {
+          updateDocument("comments", commentId, {
+            likes: comment.likes.filter((like) => like !== currentUser.uid),
+          });
+        } else {
+          if (comment.unLikes.some((unLike) => unLike === currentUser.uid)) {
+            updateDocument("comments", commentId, {
+              likes: [...comment.likes, currentUser.uid],
+              unLikes: comment.unLikes.filter(
+                (unLike) => unLike !== currentUser.uid
+              ),
+            });
+          } else {
+            updateDocument("comments", commentId, {
+              likes: [...comment.likes, currentUser.uid],
+            });
+          }
+        }
+      }
+    } else {
+      showToast({
+        title: "Error.",
+        description: "You must login to like/dislike this comment.",
+        status: "error",
+      });
+    }
+  };
+
+  const handleUnLikeComment = (commentId) => {
+    if (currentUser.uid) {
+      if (comment.unLikes.length <= 0) {
+        if (comment.likes.some((like) => like === currentUser.uid)) {
+          updateDocument("comments", commentId, {
+            unLikes: [currentUser.uid],
+            likes: comment.likes.filter((like) => like !== currentUser.uid),
+          });
+        } else {
+          updateDocument("comments", commentId, {
+            unLikes: [currentUser.uid],
+          });
+        }
+      } else {
+        if (comment.unLikes.some((unLike) => unLike === currentUser.uid)) {
+          updateDocument("comments", commentId, {
+            unLikes: comment.unLikes.filter(
+              (unLike) => unLike !== currentUser.uid
+            ),
+          });
+        } else {
+          if (comment.likes.some((like) => like === currentUser.uid)) {
+            updateDocument("comments", commentId, {
+              unLikes: [...comment.unLikes, currentUser.uid],
+              likes: comment.likes.filter((like) => like !== currentUser.uid),
+            });
+          } else {
+            updateDocument("comments", commentId, {
+              unLikes: [...comment.unLikes, currentUser.uid],
+            });
+          }
+        }
+      }
+    } else {
+      showToast({
+        title: "Error.",
+        description: "You must login to like/dislike this comment.",
+        status: "error",
+      });
+    }
+  };
+
   return (
     <div className="flex items-start">
-      <Avatar name={comment.displayName} src={comment.photoURL} />
+      <Avatar size="sm" name={comment.displayName} src={comment.photoURL} />
       <div className="ml-4">
         <div className="flex">
           <p className="text-lg text-white font-medium">
@@ -56,7 +147,7 @@ function CommentUser({ comment, handleDeleteComment }) {
         </div>
         {isEditing && commentEdit === comment.id ? (
           <form
-            onSubmit={(e) => handleUpdateComment(e, comment.id)}
+            onSubmit={(e) => handleUpdateContentComment(e, comment.id)}
             className="mt-3 flex items-center"
           >
             <input
@@ -76,24 +167,41 @@ function CommentUser({ comment, handleDeleteComment }) {
         ) : (
           <p className="mt-1 text-white/90">{comment.comment}</p>
         )}
-        <div className="mt-1 flex items-center">
-          <button
-            onClick={() => {
-              setIsReply((prev) => !prev);
-              setCommentReply(comment.id);
-            }}
-            className="text-sm text-white/70 hover:text-red transition-all"
-          >
-            Reply
-          </button>
+        <div className="mt-2 flex items-center">
+          <div className="flex items-center">
+            <p className="mr-2 text-sm text-white/70">
+              {comment?.likes?.length}
+            </p>
+            <button onClick={() => handleLikeComment(comment.id)} className="">
+              <BsFillEmojiHeartEyesFill
+                className={`${
+                  (comment?.likes?.some((like) => like === currentUser.uid) &&
+                    "!text-red") ||
+                  ""
+                } text-sm text-white/70 hover:text-red transition-all`}
+              />
+            </button>
+          </div>
+          <div className="ml-3 flex items-center">
+            <p className="mr-2 text-sm text-white/70">
+              {comment?.unLikes?.length}
+            </p>
+            <button onClick={() => handleUnLikeComment(comment.id)}>
+              <BsFillEmojiAngryFill
+                className={`${
+                  (comment?.unLikes?.some(
+                    (unLike) => unLike === currentUser.uid
+                  ) &&
+                    "!text-red") ||
+                  ""
+                } text-sm text-white/70 hover:text-red transition-all`}
+              />
+            </button>
+          </div>
           <p className="ml-2 text-sm text-white/70">
             {comment.isEdited ? "Edited" : ""}
           </p>
         </div>
-        {/* {isReply && commentReply === comment.id && (
-          <CommentReply
-          />
-        )} */}
       </div>
       {currentUser.uid === comment.uid && (
         <div className="ml-6">

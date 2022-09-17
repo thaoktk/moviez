@@ -58,7 +58,6 @@ function App() {
       if (user) {
         const docRef = doc(db, "users", user.uid);
         getDoc(docRef).then((doc) => {
-          console.log(doc.data());
           setCurrentUser({
             ...doc.data(),
             id: doc.id,

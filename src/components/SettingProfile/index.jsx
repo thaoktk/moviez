@@ -34,7 +34,7 @@ function SettingProfile() {
         description: "Change username successfully.",
         status: "success",
       });
-    }
+    } 
   };
 
   const handleChangePhoto = (e) => {
