@@ -30,7 +30,7 @@ function SettingProfile() {
       setUsernameChange("");
 
       showToast({
-        title: "Successfully.",
+        title: "Successful.",
         description: "Change username successfully.",
         status: "success",
       });
