@@ -41,7 +41,7 @@ function SettingProfile() {
     e.preventDefault();
 
     if (!e.target.files[0]) return;
-    const storageRef = ref(storage, `images/${e.target.files[0].name + v4()}`);
+    const storageRef = ref(storage, `images/${e.target.files[0].name}`);
     const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
 
     uploadTask.on("state_changed", () => {
